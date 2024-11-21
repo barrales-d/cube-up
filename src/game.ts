@@ -32,7 +32,7 @@ class MainScene extends Phaser.Scene {
   }
 
   gameOver(): void {
-    store.set(scoreAtom, limitScore(0));
+    store.set(scoreAtom, limitScore(1));
     store.set(currentViewAtom, "gameover");
     store.set(isMenuVisibleAtom, true);
     this.scene.restart();

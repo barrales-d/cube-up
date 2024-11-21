@@ -108,6 +108,24 @@ body {
 
 }
 
+.share-input-container {
+    margin: 10px 0;
+}
+
+.share-input {
+    padding: 0.5rem;
+    border: 2px solid #ccc;
+    border-radius: 10rem;
+    font-size: 1rem;
+    width: 200px;
+    text-align: center;
+}
+
+.share-input:focus {
+    outline: none;
+    border-color: #4caf50;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
