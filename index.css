@@ -1,0 +1,119 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* Import fonts via Relative Paths  */
+/* @font-face {
+    font-family: ;
+    src: url();
+} */
+
+:root {
+    font-family: "Monaspace Krypton Var", 'Courier New', Courier, monospace;
+    font-size: 1em;
+    /* set up colors */
+}
+
+html,
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FAF8F6;
+}
+
+/* Any react UI element use:
+ position: fixed;
+ z-index: 1;
+
+*/
+#game {
+    flex: 1;
+}
+
+#ui {
+    position: absolute;
+    width: 800px;
+    height: 600px;
+    /* TODO: remember to remove border */
+    border: 2px solid red;
+}
+
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 800px;
+    height: 600px;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* z-index: ; */
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+
+.menu-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 400px;
+    width: 300px;
+    color: white;
+    border: 2px solid white;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    animation: fadeIn 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+
+.menu-btn {
+    width: 200px;
+    height: 3rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.menu-btn:active,
+.menu-btn:hover {
+    background-color: antiquewhite;
+
+}
+
+.pause-btn {
+    /* color: white; */
+    position: absolute;
+    width: 32px;
+    aspect-ratio: 1 / 1;
+    top: 20px;
+    right: 20px;
+}
+
+.pause-btn:active,
+.pause-btn:hover {
+    background-color: antiquewhite;
+
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
