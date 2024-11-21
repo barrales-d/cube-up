@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useMenuState } from "../hooks/useMenuState";
 import { MainMenu } from "./MainMenu";
 import { Overlay } from "./Overlay";
+import { GameOver } from "./GameOver";
 
 export function ReactUI() {
   const { isMenuVisible, currentView, toggleMenu } = useMenuState();
@@ -25,7 +26,7 @@ export function ReactUI() {
     switch (currentView) {
       case "leaderboard": return <div>Leaderboard</div>;
       case "settings":    return <div>Settings</div>;
-      case "gameover":    return <div>Game Over</div>;
+      case "gameover":    return <GameOver />;
       case "main":        return <MainMenu />;
     }
   };

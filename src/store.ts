@@ -6,5 +6,6 @@ export const isMenuVisibleAtom = atom<boolean>(false);
 export const currentViewAtom = atom<MenuView>("main");
 
 export const currentPlayerAtom = atom<Schema["Players"]["type"] | null>(null);
+export const scoreAtom = atom<number>(0);
 
 export const store = createStore();
