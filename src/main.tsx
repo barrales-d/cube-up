@@ -5,6 +5,7 @@ import outputs from "../amplify_outputs.json";
 import { Provider } from "jotai";
 import { ReactUI } from "./react_components/ReactUI";
 import { store } from "./store";
+import { newGame } from "./game";
 
 Amplify.configure(outputs);
 
@@ -15,3 +16,5 @@ ReactDOM.createRoot(document.getElementById("ui")!).render(
     </Provider>
   </React.StrictMode>
 );
+
+newGame();
