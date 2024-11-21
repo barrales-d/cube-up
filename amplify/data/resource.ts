@@ -4,7 +4,7 @@ const schema = a.schema({
   Players: a.model({
       username: a.string().required(),
       highscore: a.float().required().default(0.00),
-      achievedAt: a.date().default(() => new Date().toISOString())
+      achievedAt: a.date().default(new Date().toISOString())
     })
     .authorization((allow) => [allow.publicApiKey()]),
 });
