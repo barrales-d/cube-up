@@ -12,7 +12,7 @@ export type SimplePlayer = {
   highscore: number;
 }
 
-// Props for the LeaderBoardContent comopent
+// Props for the LeaderBoardContent Component
 export interface LeaderBoardContentProps {
   isLoading: boolean;
   error: string | null;
@@ -20,7 +20,7 @@ export interface LeaderBoardContentProps {
   localPlayer: SimplePlayer | undefined;
 }
 
-// Props for the PlayerRowProps comopent
+// Props for the PlayerRow Component
 export interface PlayerRowProps {
   player: Player;
   index: number;

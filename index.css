@@ -108,12 +108,17 @@ body {
 
 }
 
-.share-input-container {
-  margin: 10px 0;
+.share-container {
+  display: flex;
+  gap: 20px;
+  text-align: center;
+  padding: 1rem 2rem;
 }
-
+.share-container>button {
+  width: auto;
+  padding: 0.25rem 0.5rem;
+}
 .share-input {
-  padding: 0.5rem;
   border: 2px solid #ccc;
   border-radius: 10rem;
   font-size: 1rem;
