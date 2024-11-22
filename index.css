@@ -1,9 +1,9 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 /* Import fonts via Relative Paths  */
@@ -13,19 +13,19 @@
 } */
 
 :root {
-    font-family: "Monaspace Krypton Var", 'Courier New', Courier, monospace;
-    font-size: 1em;
-    /* set up colors */
+  font-family: "Monaspace Krypton Var", 'Courier New', Courier, monospace;
+  font-size: 1em;
+  /* set up colors */
 }
 
 html,
 body {
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #FAF8F6;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FAF8F6;
 }
 
 /* Any react UI element use:
@@ -34,104 +34,133 @@ body {
 
 */
 #game {
-    flex: 1;
+  flex: 1;
 }
 
 #ui {
-    position: absolute;
-    width: 800px;
-    height: 600px;
-    /* TODO: remember to remove border */
-    border: 2px solid red;
+  position: absolute;
+  width: 800px;
+  height: 600px;
+  /* TODO: remember to remove border */
+  border: 2px solid red;
 }
 
 .overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 800px;
-    height: 600px;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* z-index: ; */
-    animation: fadeIn 0.3s ease-in-out;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* z-index: ; */
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 
 .menu-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 400px;
-    width: 300px;
-    color: white;
-    border: 2px solid white;
-    border-radius: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2em;
-    animation: fadeIn 0.3s ease;
-    transition: opacity 0.3s ease;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 400px;
+  width: 300px;
+  color: white;
+  border: 2px solid white;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+  animation: fadeIn 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .menu-btn {
-    width: 200px;
-    height: 3rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.2s ease;
+  width: 200px;
+  height: 3rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
 }
 
 .menu-btn:active,
 .menu-btn:hover {
-    background-color: antiquewhite;
+  background-color: antiquewhite;
 
 }
 
 .pause-btn {
-    /* color: white; */
-    position: absolute;
-    width: 32px;
-    aspect-ratio: 1 / 1;
-    top: 20px;
-    right: 20px;
+  /* color: white; */
+  position: absolute;
+  width: 32px;
+  aspect-ratio: 1 / 1;
+  top: 20px;
+  right: 20px;
 }
 
 .pause-btn:active,
 .pause-btn:hover {
-    background-color: antiquewhite;
+  background-color: antiquewhite;
 
 }
 
 .share-input-container {
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 .share-input {
-    padding: 0.5rem;
-    border: 2px solid #ccc;
-    border-radius: 10rem;
-    font-size: 1rem;
-    width: 200px;
-    text-align: center;
+  padding: 0.5rem;
+  border: 2px solid #ccc;
+  border-radius: 10rem;
+  font-size: 1rem;
+  width: 200px;
+  text-align: center;
 }
 
 .share-input:focus {
-    outline: none;
-    border-color: #4caf50;
+  outline: none;
+  border-color: #4caf50;
+}
+
+.leaderboard-table {
+  border: 3px solid white;
+  text-align: center;
+  width: 275px;
+  border-collapse: collapse;
+}
+
+th,
+tr {
+  border-bottom: 2px solid white;
+  padding: 0.5rem;
+  background-color: #101010;
+}
+td {
+  padding: 0.25rem 1rem;
+}
+
+tr:nth-child(odd) {
+  background-color: #4c5baf;
+}
+
+.leaderboard-table>thead {
+  text-transform: capitalize;
+}
+
+.local-player {
+  background-color: #4caf50 !important;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
+  from {
+    opacity: 0;
+  }
 
-    to {
-        opacity: 1;
-    }
+  to {
+    opacity: 1;
+  }
 }

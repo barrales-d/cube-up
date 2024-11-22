@@ -27,10 +27,13 @@ export function GameOver() {
     }
     // TODO: Update Score?
 
-    client.models.Players.create({
+    let localPlayer = {
       username: playerName,
       highscore: score,
-    });
+    };
+    client.models.Players.create(localPlayer);
+
+    localStorage.setItem("local-player", JSON.stringify(localPlayer));
 
 
     setPlayerName("");
@@ -66,8 +69,8 @@ export function GameOver() {
         <button className="menu-btn" onClick={handleShare}>
           {showShareInput ? "Submit Score" : "Share?"}
         </button>
-      )
-      }
+      )}
+
       <button className="menu-btn" onClick={handleRestart}>Play Again</button>
       <button className="menu-btn" onClick={() => setCurrentView("main")}>Main Menu</button>
     </div>

@@ -3,6 +3,7 @@ import { useMenuState } from "../hooks/useMenuState";
 import { MainMenu } from "./MainMenu";
 import { Overlay } from "./Overlay";
 import { GameOver } from "./GameOver";
+import { LeaderBoard } from "./LeaderBoard";
 
 export function ReactUI() {
   const { isMenuVisible, currentView, toggleMenu } = useMenuState();
@@ -24,7 +25,7 @@ export function ReactUI() {
 
   const renderView = () => {
     switch (currentView) {
-      case "leaderboard": return <div>Leaderboard</div>;
+      case "leaderboard": return <LeaderBoard />;
       case "settings":    return <div>Settings</div>;
       case "gameover":    return <GameOver />;
       case "main":        return <MainMenu />;
