@@ -5,7 +5,7 @@ import { generateClient } from "aws-amplify/data";
 
 import { ShareState } from "../types/gameover";
 import { scoreAtom } from "../store";
-import { SimplePlayer } from "../types/leaderboard";
+import { SimplePlayer } from "../types/player";
 
 const client = generateClient<Schema>();
 
@@ -20,10 +20,10 @@ export function useShareStateData() {
       setShareState("share");
       return;
     }
-    
+
     client.models.Players.create(player);
     localStorage.setItem("local-player", JSON.stringify(player));
-    
+
     setPlayer({ username: "", highscore: score });
     setShareState("confirm");
   }

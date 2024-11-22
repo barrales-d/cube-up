@@ -1,11 +1,8 @@
-import { useAtomValue } from "jotai";
-import { scoreAtom } from "../store";
 import { useMenuState } from "../hooks/useMenuState";
 import { ShareScoreProps } from "../types/gameover";
 import { useShareStateData } from "../hooks/useShareStateData";
 
 export function GameOver() {
-  const score = useAtomValue(scoreAtom);
 
   const { toggleMenu, setCurrentView } = useMenuState();
   const shareStateProps = useShareStateData();
@@ -17,7 +14,7 @@ export function GameOver() {
   return (
     <div className="menu-container">
       <h1>Game Over</h1>
-      <h3>Score: {score}m</h3>
+      <h3>Score: {shareStateProps.player.highscore}m</h3>
 
       <ShareScore {...shareStateProps} />
 
@@ -30,7 +27,7 @@ export function GameOver() {
 function ShareScore({ shareState, handleShare, player, setPlayer }: ShareScoreProps) {
   switch (shareState) {
     case "button": return <button className="menu-btn" onClick={handleShare}>Share?</button>;
-    case "confirm": return <div><p>Thank you for sharing!</p></div>
+    case "confirm": return <p>Thank you for sharing!</p>
     case "share": return (
       <div className="share-container">
         <input
