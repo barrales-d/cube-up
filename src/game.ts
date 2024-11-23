@@ -1,9 +1,14 @@
 import Phaser from "phaser";
 import { currentViewAtom, isMenuVisibleAtom, scoreAtom, store } from "./store";
 import { limitScore } from "./components/utils";
+import { Player } from "./entities/Player";
+import { GAME_CONFIG } from "./components/constants";
+import { PlatformManager } from "./managers/PlatformManager";
 
-
+const worldAttributes = GAME_CONFIG.world;
 class MainScene extends Phaser.Scene {
+  private player!: Player;
+  private platforms!: PlatformManager
   constructor() {
     super("MainScene");
   }
@@ -21,14 +26,26 @@ class MainScene extends Phaser.Scene {
         this.scene.resume();
       }
     });
-    this.add.rectangle(400, 300, 100, 100, 0x00ff00);
+
+    this.player = new Player(this, worldAttributes.width / 2, 450);
+
+    this.platforms = new PlatformManager(this, this.player.getSprite());
+
+    this.cameras.main.startFollow(this.player.getSprite(), true, GAME_CONFIG.camera.lerpSpeed);
+    this.cameras.main.setDeadzone(GAME_CONFIG.camera.yAxisDeadzone);
+
   }
+
   update(): void {
     if (this.scene.isPaused()) { return; }
     const cursors = this.input.keyboard!.createCursorKeys();
     if (cursors.space.isDown) {
       this.gameOver();
     }
+    this.player.handleMovement(cursors);
+
+    this.platforms.createNewPlatform(this.player.getY());
+    this.platforms.removeOffscreenPlatforms(this.cameras.main.scrollY);
   }
 
   gameOver(): void {
