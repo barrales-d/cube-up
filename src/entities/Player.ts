@@ -40,4 +40,9 @@ export class Player {
   public setCollider(scene: Phaser.Scene, object: any): void {
     scene.physics.add.collider(this.sprite, object);
   }
+
+  public getDistancedTraveled(): number {
+    if (this.startPosition.y - this.sprite.y < 0) return 0;
+    return Math.abs(this.startPosition.y - this.sprite.y) / playerAttributes.jump_height;
+  }
 }

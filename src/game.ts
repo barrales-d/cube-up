@@ -4,11 +4,13 @@ import { limitScore } from "./components/utils";
 import { Player } from "./entities/Player";
 import { GAME_CONFIG } from "./components/constants";
 import { PlatformManager } from "./managers/PlatformManager";
+import { ScoreManager } from "./managers/ScoreManager";
 
 const worldAttributes = GAME_CONFIG.world;
 class MainScene extends Phaser.Scene {
   private player!: Player;
   private platforms!: PlatformManager
+  private scoreManager!: ScoreManager;
   constructor() {
     super("MainScene");
   }
@@ -30,9 +32,10 @@ class MainScene extends Phaser.Scene {
     this.player = new Player(this, worldAttributes.width / 2, 450);
 
     this.platforms = new PlatformManager(this, this.player.getSprite());
+    this.scoreManager = new ScoreManager(this);
 
-    this.cameras.main.startFollow(this.player.getSprite(), true, GAME_CONFIG.camera.lerpSpeed);
-    this.cameras.main.setDeadzone(GAME_CONFIG.camera.yAxisDeadzone);
+    this.cameras.main.startFollow(this.player.getSprite(), true, 0.1, GAME_CONFIG.camera.lerpSpeed);
+    this.cameras.main.setDeadzone(0, GAME_CONFIG.camera.yAxisDeadzone);
 
   }
 
@@ -46,6 +49,9 @@ class MainScene extends Phaser.Scene {
 
     this.platforms.createNewPlatform(this.player.getY());
     this.platforms.removeOffscreenPlatforms(this.cameras.main.scrollY);
+
+    this.scoreManager.updateScore(this.player.getDistancedTraveled());
+
   }
 
   gameOver(): void {
