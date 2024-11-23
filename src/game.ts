@@ -1,16 +1,16 @@
 import Phaser from "phaser";
-import { currentViewAtom, isMenuVisibleAtom, scoreAtom, store } from "./store";
-import { limitScore } from "./components/utils";
 import { Player } from "./entities/Player";
 import { GAME_CONFIG } from "./components/constants";
 import { PlatformManager } from "./managers/PlatformManager";
 import { ScoreManager } from "./managers/ScoreManager";
+import { gameStore } from "./GameStore";
 
 const worldAttributes = GAME_CONFIG.world;
 class MainScene extends Phaser.Scene {
   private player!: Player;
   private platforms!: PlatformManager
   private scoreManager!: ScoreManager;
+  private subscriptions: Array<() => void> = [];
   constructor() {
     super("MainScene");
   }
@@ -18,16 +18,19 @@ class MainScene extends Phaser.Scene {
   preload(): void { }
 
   create(): void {
-    store.sub(isMenuVisibleAtom, () => {
-      // TODO: I think I can check the current view here for "gameover" and restart the game properly 
-      if (store.get(isMenuVisibleAtom)) {
-        console.log("pause");
-        this.scene.pause();
+    const unsubcribe = gameStore.sub("isPlaying", (isPlaying) => {
+      if (isPlaying) {
+        if (gameStore.getState("hasGameOver")) {
+          gameStore.setState("hasGameOver", true); // Reset the flag
+          this.scene.restart();
+        } else {
+          this.scene.resume();
+        }
       } else {
-        console.log("resume");
-        this.scene.resume();
+        this.scene.pause();
       }
     });
+    this.subscriptions.push(unsubcribe);
 
     this.player = new Player(this, worldAttributes.width / 2, 450);
 
@@ -50,15 +53,20 @@ class MainScene extends Phaser.Scene {
     this.platforms.createNewPlatform(this.player.getY());
     this.platforms.removeOffscreenPlatforms(this.cameras.main.scrollY);
 
-    this.scoreManager.updateScore(this.player.getDistancedTraveled());
+    const score = this.scoreManager.updateScore(this.player.getDistancedTraveled());
+    // Updates Score in StateManager
+    gameStore.setState("score", score);
 
   }
 
   gameOver(): void {
-    store.set(scoreAtom, limitScore(2));
-    store.set(currentViewAtom, "gameover");
-    store.set(isMenuVisibleAtom, true);
-    this.scene.restart();
+    // Clean up all subscriptions when we get a gameover
+    this.subscriptions.forEach((unsub) => unsub());
+    this.subscriptions = [];
+
+    gameStore.setState("isPlaying", false);         //  switch to ui 
+    gameStore.setState("currentView", "gameover");  // display gameover
+    gameStore.setState("hasGameOver", true);        // set the flag
   }
 }
 
