@@ -1,12 +1,13 @@
-import { useMenuState } from "../hooks/useMenuState";
 import { Overlay } from "./Overlay";
 import { useLeaderBoardData } from "../hooks/useLeaderBoardData";
 import { useLocalPlayer } from "../hooks/useLocalPlayer";
 import { LeaderBoardContentProps, PlayerRowProps } from "../types/leaderboard";
+import { useGameState } from "../GameStore";
 
 
 export function LeaderBoard() {
-  const { setCurrentView } = useMenuState();
+  const [, setCurrentView] = useGameState("currentView");
+  
   const { playerScores, isLoading, error } = useLeaderBoardData();
   const { localPlayer } = useLocalPlayer();
 

@@ -18,11 +18,11 @@ class MainScene extends Phaser.Scene {
   preload(): void { }
 
   create(): void {
-    const unsubcribe = gameStore.sub("isPlaying", (isPlaying) => {
+    const unsubcribe = gameStore.sub("isPlaying", (isPlaying: boolean) => {
       if (isPlaying) {
         if (gameStore.getState("hasGameOver")) {
           gameStore.setState("hasGameOver", true); // Reset the flag
-          this.scene.restart();
+          this.time.delayedCall(100, () => this.scene.restart());
         } else {
           this.scene.resume();
         }
@@ -53,9 +53,10 @@ class MainScene extends Phaser.Scene {
     this.platforms.createNewPlatform(this.player.getY());
     this.platforms.removeOffscreenPlatforms(this.cameras.main.scrollY);
 
-    const score = this.scoreManager.updateScore(this.player.getDistancedTraveled());
+    const [score, didUpdate] = this.scoreManager.updateScore(this.player.getDistancedTraveled());
     // Updates Score in StateManager
-    gameStore.setState("score", score);
+    if (didUpdate)
+      gameStore.setState("score", score);
 
   }
 

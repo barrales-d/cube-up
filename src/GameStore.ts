@@ -1,17 +1,14 @@
-import { EventEmitter } from "events";
-import { MenuView } from "./hooks/useMenuState";
-import { Player } from "./types/player";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
+import { atom, createStore, useAtom } from "jotai";
+
+export type MenuView = "main" | "leaderboard" | "settings" | "gameover";
 
 export interface GameState {
   // Determines if the Game is running
   isPlaying: boolean;
   // Determines what Menu should be displayed when Paused
   currentView: MenuView;
-  // Set when the User creates a username and saved in Local Storage
-  currentPlayer: Player | undefined;
-  // Seperate score for when there is no currentPlayer
-  // In addition, used for the current run's score
+  // Used for the current run's score
   score: number;
   // Flag to determine if the game is over
   hasGameOver: boolean;
@@ -21,38 +18,85 @@ export interface GameState {
 const initialGameState: GameState = {
   isPlaying: false,           // The game should be paused and displaying a Menu
   currentView: "main",        // Displays the MainMenu by default
-  currentPlayer: undefined,   // No player on first run
   score: 0,                   // Default score is 0
   hasGameOver: false,
 };
 
 
-class GameStore extends EventEmitter {
-  private state: GameState;
-  constructor() {
-    super();
-    this.state = initialGameState;
-  }
+const isPlayingAtom = atom<boolean>(initialGameState.isPlaying);
+const currentViewAtom = atom<MenuView>(initialGameState.currentView);
+const scoreAtom = atom<number>(initialGameState.score);
+const hasGameOverAtom = atom<boolean>(initialGameState.hasGameOver);
 
+export const store = createStore();
+
+class GameStore {
+  constructor() { }
+  public getAtom<K extends keyof GameState>(key: K) {
+    switch (key) {
+      case "isPlaying": return isPlayingAtom;
+      case "currentView": return currentViewAtom;
+      case "score": return scoreAtom;
+      case "hasGameOver": return hasGameOverAtom;
+      default: {
+        const unreachable: never = key;
+        throw new Error(`Unhandled key: ${unreachable}`);
+      }
+    }
+  }
   public setState<K extends keyof GameState>(key: K, value: GameState[K]) {
-    this.state[key] = value;
-    this.emit(key, value);
+    console.log("Setting", key, "to", value);
+    switch (key) {
+      case "isPlaying":
+        store.set(isPlayingAtom, value as boolean);
+        break;
+      case "currentView":
+        store.set(currentViewAtom, value as MenuView);
+        break;
+      case "score":
+        store.set(scoreAtom, value as number);
+        break;
+      case "hasGameOver":
+        store.set(hasGameOverAtom, value as boolean);
+        break;
+    }
   }
 
   public getState<K extends keyof GameState>(key: K): GameState[K] {
-    return this.state[key];
+    switch (key) {
+      case "isPlaying": return store.get(isPlayingAtom) as GameState[K];
+      case "currentView": return store.get(currentViewAtom) as GameState[K];
+      case "score": return store.get(scoreAtom) as GameState[K];
+      case "hasGameOver": return store.get(hasGameOverAtom) as GameState[K];
+      default: {
+        const unreachable: never = key;
+        throw new Error(`Unhandled key: ${unreachable}`);
+      }
+    }
   }
 
-  public sub<K extends keyof GameState>(key: K, func: (value: GameState[K]) => void) {
-    this.on(key, func);
-    return () => this.off(key, func);
+  public sub<K extends keyof GameState>(key: K, func: any) {
+    switch (key) {
+      case "isPlaying":
+        return store.sub(isPlayingAtom, () => func(this.getState(key)));
+      case "currentView":
+        return store.sub(currentViewAtom, () => func(this.getState(key)));
+      case "score":
+        return store.sub(scoreAtom, () => func(this.getState(key)));
+      case "hasGameOver":
+        return store.sub(hasGameOverAtom, () => func(this.getState(key)));
+      default: {
+        const unreachable: never = key;
+        throw new Error(`Unhandled key: ${unreachable}`);
+      }
+    }
   }
 }
 
 export const gameStore = new GameStore();
 
 export function useGameState<K extends keyof GameState>(key: K) {
-  const [value, setValue] = useState<GameState[K]>(gameStore.getState(key));
+  const [value, setValue] = useAtom(gameStore.getAtom(key));
 
   useEffect(() => {
     const unsubcribe = gameStore.sub(key, setValue);

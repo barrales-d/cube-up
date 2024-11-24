@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Schema } from "../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
-import { Player, Players } from "../types/leaderboard";
+import { Player, Players } from "../types/player";
 
 const client = generateClient<Schema>();
 

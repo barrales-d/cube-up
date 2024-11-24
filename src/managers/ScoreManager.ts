@@ -10,12 +10,13 @@ export class ScoreManager {
     this.scoreText.setScrollFactor(0);
   }
 
-  updateScore(distance: number): number {
+  updateScore(distance: number): [number, boolean] {
     if (distance > this.score) {
       this.score = limitScore(distance);
       this.scoreText.setText(`${this.score}m`);
+      return [this.score, true] as const;
     }
-    return this.score;
+    return [this.score, false] as const;
   }
 
 }

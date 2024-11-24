@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SimplePlayer } from "../types/leaderboard";
+import { SimplePlayer } from "../types/player";
 
 export function useLocalPlayer() {
   const [localPlayer, setLocalPlayer] = useState<SimplePlayer>();

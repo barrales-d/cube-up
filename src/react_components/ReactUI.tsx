@@ -1,20 +1,17 @@
-import { useEffect } from "react";
-import { useMenuState } from "../hooks/useMenuState";
 import { MainMenu } from "./MainMenu";
 import { Overlay } from "./Overlay";
 import { GameOver } from "./GameOver";
 import { LeaderBoard } from "./LeaderBoard";
+import { MenuView, useGameState } from "../GameStore";
 
 export function ReactUI() {
-  const { isMenuVisible, currentView, toggleMenu } = useMenuState();
+  const [isPlaying, setIsPlaying] = useGameState("isPlaying");
+  const [currentView] = useGameState("currentView");
 
-  useEffect(() => {
-    toggleMenu();
-  }, []);
-  
-  if (!isMenuVisible) {
+  if (isPlaying as boolean) {
+    // Game is running, Render PauseButton
     return (
-      <button className="pause-btn" onClick={toggleMenu}>
+      <button className="pause-btn" onClick={() => { setIsPlaying(false); }}>
         <svg width="24" height="24" viewBox="0 0 24 24">
           <rect x="6" y="4" width="4" height="16" fill="currentColor" />
           <rect x="14" y="4" width="4" height="16" fill="currentColor" />
@@ -24,11 +21,11 @@ export function ReactUI() {
   }
 
   const renderView = () => {
-    switch (currentView) {
+    switch (currentView as MenuView) {
       case "leaderboard": return <LeaderBoard />;
-      case "settings":    return <div>Settings</div>;
-      case "gameover":    return <GameOver />;
-      case "main":        return <MainMenu />;
+      case "settings": return <div>Settings</div>;
+      case "gameover": return <GameOver />;
+      case "main": return <MainMenu />;
     }
   };
 

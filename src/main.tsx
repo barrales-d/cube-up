@@ -4,8 +4,8 @@ import { Amplify } from "aws-amplify";
 import outputs from "../amplify_outputs.json";
 import { Provider } from "jotai";
 import { ReactUI } from "./react_components/ReactUI";
-import { store } from "./store";
 import { newGame } from "./game";
+import { store } from "./GameStore";
 
 Amplify.configure(outputs);
 

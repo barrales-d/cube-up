@@ -1,14 +1,19 @@
-import { useMenuState } from "../hooks/useMenuState";
 import { ShareScoreProps } from "../types/gameover";
 import { useShareStateData } from "../hooks/useShareStateData";
+import { useGameState } from "../GameStore";
 
 export function GameOver() {
+  const [hasGameOver] = useGameState("hasGameOver");
+  const [, setCurrentView] = useGameState("currentView");
+  const [, setIsPlaying] = useGameState("isPlaying");
 
-  const { toggleMenu, setCurrentView } = useMenuState();
   const shareStateProps = useShareStateData();
 
   function handleRestart() {
-    toggleMenu();
+    if (hasGameOver) {
+      setIsPlaying(true);
+      return;
+    }
     setCurrentView("main");
   }
   return (
