@@ -27,8 +27,11 @@ class MainScene extends Phaser.Scene {
     const unsubcribe = gameStore.sub("isPlaying", (isPlaying: boolean) => {
       if (isPlaying) {
         if (gameStore.getState("hasGameOver")) {
-          gameStore.setState("hasGameOver", true); // Reset the flag
-          this.time.delayedCall(100, () => this.scene.restart());
+          console.log("[DEBUG]", "isPlaying, hasGameOver are TRUE");
+          gameStore.setState("hasGameOver", false);
+          this.destroy();
+          this.scene.restart();
+
         } else {
           this.scene.resume();
         }
@@ -64,9 +67,7 @@ class MainScene extends Phaser.Scene {
   update(): void {
     if (this.scene.isPaused()) { return; }
     const cursors = this.input.keyboard!.createCursorKeys();
-    if (cursors.space.isDown) {
-      this.gameOver();
-    }
+
     this.player.handleMovement(cursors);
 
     this.platforms.createNewPlatform(this.player.getY());
@@ -79,16 +80,24 @@ class MainScene extends Phaser.Scene {
     if (didUpdate)
       gameStore.setState("score", score);
 
+    if (this.player.getY() > this.platforms.getLowestPlatformY() + worldAttributes.height / 2) {
+      this.gameOver();
+    }
   }
 
   gameOver(): void {
-    // Clean up all subscriptions when we get a gameover
+    gameStore.setState("currentView", "gameover");
+    gameStore.setState("isPlaying", false);
+    gameStore.setState("hasGameOver", true)
+  }
+  destroy() {
+    this.player.destroy();
+    this.platforms.destroy();
+    this.scoreManager.destroy();
+    this.barriers.forEach((barrier) => barrier.destroy());
+    this.barriers = [];
     this.subscriptions.forEach((unsub) => unsub());
     this.subscriptions = [];
-
-    gameStore.setState("isPlaying", false);         //  switch to ui 
-    gameStore.setState("currentView", "gameover");  // display gameover
-    gameStore.setState("hasGameOver", true);        // set the flag
   }
 }
 
