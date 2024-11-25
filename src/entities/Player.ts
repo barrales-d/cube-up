@@ -14,7 +14,7 @@ export class Player {
   }
 
   public handleMovement(cursors: Phaser.Types.Input.Keyboard.CursorKeys): void {
-    // Ground Movement
+    // Horizontal Movement
     if (cursors.left.isDown) {
       this.sprite.setVelocityX(-playerAttributes.ground_speed);
     } else if (cursors.right.isDown) {
@@ -23,7 +23,7 @@ export class Player {
       this.sprite.setVelocityX(0);
     }
 
-    // Jump Movement
+    // Vertical Movement
     if (cursors.up.isDown && this.sprite.body.touching.down) {
       this.sprite.setVelocityY(-playerAttributes.jump_height);
     }
