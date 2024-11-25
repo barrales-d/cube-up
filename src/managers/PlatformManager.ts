@@ -17,7 +17,7 @@ export class PlatformManager {
 
   private createInitialPlatforms(): void {
     const startPlatform = this.platforms.create(400, 600, 'platform')
-      // .setScale(0.25, 0.05)
+      .setScale(platformAttributes.scale.width, platformAttributes.scale.height)
       .refreshBody();
     this.lastPlatformY = startPlatform.y;
 
@@ -31,7 +31,7 @@ export class PlatformManager {
     const y = this.lastPlatformY - Phaser.Math.Between(platformAttributes.minDistance, platformAttributes.maxDistance);
 
     this.platforms.create(x, y, 'platform')
-      // .setScale(0.25, 0.05)
+      .setScale(platformAttributes.scale.width, platformAttributes.scale.height)
       .refreshBody();
 
     this.lastPlatformY = y;

@@ -15,7 +15,10 @@ class MainScene extends Phaser.Scene {
     super("MainScene");
   }
 
-  preload(): void { }
+  preload(): void {
+    this.load.image("player", "assets/player.png");
+    this.load.image("platform", "assets/platform.png");
+  }
 
   create(): void {
     const unsubcribe = gameStore.sub("isPlaying", (isPlaying: boolean) => {

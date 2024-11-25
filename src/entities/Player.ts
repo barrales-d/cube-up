@@ -7,7 +7,7 @@ export class Player {
   private startPosition: Phaser.Math.Vector2 = Phaser.Math.Vector2.ZERO;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
-    this.sprite = scene.physics.add.sprite(x, y, 'player');//.setScale(0.5);
+    this.sprite = scene.physics.add.sprite(x, y, 'player').setScale(playerAttributes.scale).refreshBody();
     this.startPosition = new Phaser.Math.Vector2(x, y);
 
     this.sprite.setBounce(0.2);
