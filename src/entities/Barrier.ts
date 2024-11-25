@@ -12,9 +12,11 @@ export class Barrier {
     scene.physics.add.collider(player, this.rect);
   }
 
-  updatePosition(cameraY: number) {
+  public updatePosition(cameraY: number) {
     this.rect.setY(cameraY + 400);
 
     (this.rect.body as Phaser.Physics.Arcade.Body).updateFromGameObject();
   }
+
+  public destroy() { this.rect.destroy(); }
 }

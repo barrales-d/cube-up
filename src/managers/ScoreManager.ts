@@ -10,7 +10,7 @@ export class ScoreManager {
     this.scoreText.setScrollFactor(0);
   }
 
-  updateScore(distance: number): [number, boolean] {
+  public updateScore(distance: number): [number, boolean] {
     if (distance > this.score) {
       this.score = limitScore(distance);
       this.scoreText.setText(`${this.score}m`);
@@ -19,4 +19,5 @@ export class ScoreManager {
     return [this.score, false] as const;
   }
 
+  public destroy() { this.scoreText.destroy(); }
 }

@@ -63,4 +63,8 @@ export class PlatformManager {
     return lowestPlatformY;
   }
 
+  public destroy(): void {
+    this.platforms.clear(true, true);
+    this.platforms.destroy();
+  }
 }

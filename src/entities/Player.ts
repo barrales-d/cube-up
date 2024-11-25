@@ -45,4 +45,6 @@ export class Player {
     if (this.startPosition.y - this.sprite.y < 0) return 0;
     return Math.abs(this.startPosition.y - this.sprite.y) / playerAttributes.jump_height;
   }
+
+  public destroy(): void { this.sprite.destroy(); }
 }
