@@ -45,7 +45,6 @@ class GameStore {
     }
   }
   public setState<K extends keyof GameState>(key: K, value: GameState[K]) {
-    console.log("Setting", key, "to", value);
     switch (key) {
       case "isPlaying":
         store.set(isPlayingAtom, value as boolean);
