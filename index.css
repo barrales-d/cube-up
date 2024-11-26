@@ -8,8 +8,8 @@
 
 /* Import fonts via Relative Paths  */
 @font-face {
-    font-family: "Elite";
-    src: url("/fonts/SpecialElite-Regular.ttf");
+  font-family: "Elite";
+  src: url("/fonts/SpecialElite-Regular.ttf");
 }
 
 :root {
@@ -79,13 +79,14 @@ body {
   animation: fadeIn 0.3s ease;
   transition: opacity 0.3s ease;
 }
+
 .menu-container>h1 {
   font-size: 2em;
   font-variant: small-caps;
 }
+
 button {
   font-family: inherit;
-  font-size: 1.1em;
   border: none;
 }
 
@@ -146,9 +147,8 @@ button {
   background-color: currentColor;
   background-size: cover;
   background-position: center;
-  border: 2px solid #ccc;
+  border: 2px solid white;
   border-radius: 10rem;
-  ;
   width: 200px;
   font-size: 1rem;
   text-align: center;
