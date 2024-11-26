@@ -7,13 +7,13 @@
 }
 
 /* Import fonts via Relative Paths  */
-/* @font-face {
-    font-family: ;
-    src: url();
-} */
+@font-face {
+    font-family: "Elite";
+    src: url("/fonts/SpecialElite-Regular.ttf");
+}
 
 :root {
-  font-family: "Monaspace Krypton Var", 'Courier New', Courier, monospace;
+  font-family: "Elite";
   font-size: 1em;
   /* set up colors */
 }
@@ -62,6 +62,7 @@ body {
 
 .menu-container {
   position: absolute;
+  font-family: inherit;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -78,8 +79,13 @@ body {
   animation: fadeIn 0.3s ease;
   transition: opacity 0.3s ease;
 }
-
+.menu-container>h1 {
+  font-size: 2em;
+  font-variant: small-caps;
+}
 button {
+  font-family: inherit;
+  font-size: 1.1em;
   border: none;
 }
 

@@ -3,6 +3,7 @@ import { Overlay } from "./Overlay";
 import { GameOver } from "./GameOver";
 import { LeaderBoard } from "./LeaderBoard";
 import { MenuView, useGameState } from "../GameStore";
+import '../../index.css';
 
 export function ReactUI() {
   const [isPlaying, setIsPlaying] = useGameState("isPlaying");
