@@ -56,7 +56,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* z-index: ; */
   animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -104,18 +103,23 @@ button {
 }
 
 .pause-btn {
-  /* color: white; */
   position: absolute;
-  width: 32px;
+  background: url("/assets/platform.png");
+  background-color: currentColor;
+  background-size: cover;
+  background-position: center;
+  width: 40px;
   aspect-ratio: 1 / 1;
   top: 20px;
   right: 20px;
+  outline: auto;
+  transition: filter 0.2s ease;
 }
 
 .pause-btn:active,
 .pause-btn:hover {
-  background-color: antiquewhite;
-
+  filter: invert();
+  cursor: pointer;
 }
 
 .share-container {
@@ -137,7 +141,8 @@ button {
   background-size: cover;
   background-position: center;
   border: 2px solid #ccc;
-  border-radius: 10rem;;
+  border-radius: 10rem;
+  ;
   width: 200px;
   font-size: 1rem;
   text-align: center;
