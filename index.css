@@ -16,6 +16,8 @@
   font-family: "Elite";
   font-size: 1em;
   /* set up colors */
+  --dark-color: #25232F;
+  --light-color: #6883BA;
 }
 
 html,
@@ -41,8 +43,6 @@ body {
   position: absolute;
   width: 800px;
   height: 600px;
-  /* TODO: remember to remove border */
-  border: 2px solid red;
 }
 
 .overlay {
@@ -61,26 +61,27 @@ body {
 
 
 .menu-container {
-  position: absolute;
-  font-family: inherit;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  height: 400px;
-  width: 300px;
-  color: white;
-  border: 2px solid white;
-  border-radius: 0.5rem;
+  --border-radius: 0.5rem;
+  --gap-size: 1em;
+
+  background-color: var(--dark-color);
+  width: 400px;
+  color: var(--light-color);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 2em;
+  gap: var(--gap-size);
+  padding: 5rem 0;
+  border-radius: calc(var(--border-radius)*2);
+  background: url("/assets/platform.png");
+  background-size: 400px auto;
+  background-repeat: no-repeat;
+
   animation: fadeIn 0.3s ease;
   transition: opacity 0.3s ease;
 }
 
-.menu-container>h1 {
+.menu-title {
   font-size: 2em;
   font-variant: small-caps;
 }
@@ -88,77 +89,74 @@ body {
 button {
   font-family: inherit;
   border: none;
+
+  color: var(--dark-color);
+  font-weight: 900;
+  background-color: var(--light-color);
 }
 
 .menu-btn {
   width: 200px;
-  height: 2rem;
-  border-radius: 0.5rem;
-  background: url("/assets/platform.png");
-  background-color: currentColor;
-  background-size: cover;
-  background-position: center;
-  transition: filter 0.5s ease;
+  aspect-ratio: 4 / 1;
+  border-radius: var(--border-radius);
+
+  transition: background-color 0.5s ease;
 }
 
 .menu-btn:active,
 .menu-btn:hover {
-  filter: invert();
-  outline: auto;
-  background-color: currentColor;
+  outline: currentColor solid 2px;
+  background-color: var(--dark-color);
+  color: currentColor;
   cursor: pointer;
 }
 
 .pause-btn {
   position: absolute;
-  background: url("/assets/platform.png");
-  background-color: currentColor;
-  background-size: cover;
-  background-position: center;
   width: 40px;
   aspect-ratio: 1 / 1;
   top: 20px;
   right: 20px;
-  outline: auto;
-  transition: filter 0.2s ease;
+  border-radius: 0.5rem;
+  outline-offset: -5px;
+  outline: var(--dark-color) solid 2px;
+  transition: background-color 0.4s ease;
+
 }
 
 .pause-btn:active,
 .pause-btn:hover {
-  filter: invert();
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  outline-color: var(--light-color);
   cursor: pointer;
 }
 
 .share-container {
   display: flex;
-  width: 300px;
   justify-content: center;
-  gap: 8px;
-  text-align: center;
-  padding: 0rem 1rem;
+  align-items: center;
 }
 
-.share-container>button {
-  padding: 0rem 1.2rem;
+.share-btn {
+  width: 120px;
+  padding: 0.5rem;
+  margin: 5px;
 }
 
 .share-input {
-  background: url("/assets/platform.png");
-  background-color: currentColor;
-  background-size: cover;
-  background-position: center;
-  border: 2px solid white;
-  border-radius: 10rem;
-  width: 200px;
-  font-size: 1rem;
+  font-family: "Elite";
+  font-weight: 900;
+  background-color: var(--light-color);
+  border: none;
   text-align: center;
-  transition: all 0.5s ease;
+  border-radius: var(--border-radius);
+  padding: 8px;
+  color: var(--dark-color);
 }
 
-.share-input:focus {
-  filter: invert();
-  background-color: currentColor;
-
+.share-input::placeholder {
+  color: var(--dark-color);
 }
 
 .leaderboard-table {

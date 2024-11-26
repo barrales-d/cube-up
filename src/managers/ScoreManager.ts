@@ -9,7 +9,7 @@ export class ScoreManager {
     this.scoreText = scene.add.text(16, 16, '0.00m', {
       fontFamily: "Elite",
       fontSize: '32px',
-      color: '#000'
+      color: '#6883BA'
     });
     this.scoreText.setScrollFactor(0);
   }
