@@ -32,7 +32,7 @@ export function GameOver() {
 function ShareScore({ shareState, handleShare, player, setPlayer }: ShareScoreProps) {
   switch (shareState) {
     case "button": return <button className="menu-btn" onClick={handleShare}>Share?</button>;
-    case "confirm": return <p>Thank you for sharing!</p>
+    case "confirm": return <h3>Thank you for sharing!</h3>
     case "share": return (
       <div className="share-container">
         <input
@@ -43,7 +43,7 @@ function ShareScore({ shareState, handleShare, player, setPlayer }: ShareScorePr
           className="share-input"
           autoFocus
         />
-        <button className="menu-btn" onClick={handleShare}>Submit Score</button>
+        <button className="menu-btn share-btn" onClick={handleShare}>Submit Score</button>
       </div>
     )
   }

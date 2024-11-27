@@ -7,15 +7,17 @@
 }
 
 /* Import fonts via Relative Paths  */
-/* @font-face {
-    font-family: ;
-    src: url();
-} */
+@font-face {
+  font-family: "Elite";
+  src: url("/fonts/SpecialElite-Regular.ttf");
+}
 
 :root {
-  font-family: "Monaspace Krypton Var", 'Courier New', Courier, monospace;
+  font-family: "Elite";
   font-size: 1em;
   /* set up colors */
+  --dark-color: #25232F;
+  --light-color: #6883BA;
 }
 
 html,
@@ -41,8 +43,6 @@ body {
   position: absolute;
   width: 800px;
   height: 600px;
-  /* TODO: remember to remove border */
-  border: 2px solid red;
 }
 
 .overlay {
@@ -56,108 +56,137 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* z-index: ; */
   animation: fadeIn 0.3s ease-in-out;
 }
 
 
 .menu-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  height: 400px;
-  width: 300px;
-  color: white;
-  border: 2px solid white;
-  border-radius: 0.5rem;
+  --border-radius: 0.5rem;
+  --gap-size: 1em;
+
+  background-color: var(--dark-color);
+  width: 400px;
+  height: 600px;
+  color: var(--light-color);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 2em;
+  gap: var(--gap-size);
+  padding: 5rem 0;
+  border-radius: calc(var(--border-radius)*2);
+  background: url("/assets/platform.png");
+  background-size: 400px 600px;
+  background-repeat: no-repeat;
+
   animation: fadeIn 0.3s ease;
   transition: opacity 0.3s ease;
 }
 
+.menu-title {
+  font-size: 2em;
+  font-variant: small-caps;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+
+  color: var(--dark-color);
+  font-weight: 900;
+  background-color: var(--light-color);
+}
+
 .menu-btn {
   width: 200px;
-  height: 3rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.2s ease;
+  aspect-ratio: 4 / 1;
+  border-radius: var(--border-radius);
+
+  transition: background-color 0.5s ease;
 }
 
 .menu-btn:active,
 .menu-btn:hover {
-  background-color: antiquewhite;
-
+  outline: currentColor solid 2px;
+  background-color: var(--dark-color);
+  color: currentColor;
+  cursor: pointer;
 }
 
 .pause-btn {
-  /* color: white; */
   position: absolute;
-  width: 32px;
+  width: 40px;
   aspect-ratio: 1 / 1;
   top: 20px;
   right: 20px;
+  border-radius: 0.5rem;
+  outline-offset: -5px;
+  outline: var(--dark-color) solid 2px;
+  transition: background-color 0.4s ease;
+
 }
 
 .pause-btn:active,
 .pause-btn:hover {
-  background-color: antiquewhite;
-
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  outline-color: var(--light-color);
+  cursor: pointer;
 }
 
 .share-container {
   display: flex;
-  gap: 20px;
-  text-align: center;
-  padding: 1rem 2rem;
-}
-.share-container>button {
-  width: auto;
-  padding: 0.25rem 0.5rem;
-}
-.share-input {
-  border: 2px solid #ccc;
-  border-radius: 10rem;
-  font-size: 1rem;
-  width: 200px;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
-.share-input:focus {
-  outline: none;
-  border-color: #4caf50;
+.share-btn {
+  width: 120px;
+  padding: 0.5rem;
+  margin: 5px;
+}
+
+.share-input {
+  font-family: "Elite";
+  font-weight: 900;
+  background-color: var(--light-color);
+  border: none;
+  text-align: center;
+  border-radius: var(--border-radius);
+  padding: 8px;
+  color: var(--dark-color);
+}
+
+.share-input::placeholder {
+  color: var(--dark-color);
 }
 
 .leaderboard-table {
-  border: 3px solid white;
-  text-align: center;
-  width: 275px;
   border-collapse: collapse;
+  text-align: center;
 }
 
-th,
-tr {
-  border-bottom: 2px solid white;
-  padding: 0.5rem;
-  background-color: #101010;
-}
-td {
-  padding: 0.25rem 1rem;
-}
-
-tr:nth-child(odd) {
-  background-color: #4c5baf;
-}
-
-.leaderboard-table>thead {
+thead {
   text-transform: capitalize;
 }
 
+th {
+  padding: 0.2rem 1.5rem;
+}
+
+td {
+  padding: 0.2rem;
+}
+
+tr:nth-child(even) {
+  background-color: var(--light-color);
+  color: var(--dark-color);
+}
+
+
+
 .local-player {
-  background-color: #4caf50 !important;
+  font-weight: bolder;
+  text-decoration: solid underline 3px;
 }
 
 @keyframes fadeIn {

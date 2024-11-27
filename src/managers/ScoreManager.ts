@@ -6,7 +6,11 @@ export class ScoreManager {
   private score: number = 0;
 
   constructor(scene: Phaser.Scene) {
-    this.scoreText = scene.add.text(16, 16, '0.00m', { fontSize: '32px', color: '#000' });
+    this.scoreText = scene.add.text(16, 16, '0.00m', {
+      fontFamily: "Elite",
+      fontSize: '32px',
+      color: '#6883BA'
+    });
     this.scoreText.setScrollFactor(0);
   }
 

@@ -6,7 +6,7 @@ export function MainMenu() {
   
   return (
     <div className="menu-container">
-      <h1>Cube Up</h1>
+      <h1 className="menu-title" >Cube Up</h1>
       <button className="menu-btn" onClick={() => setIsPlaying(true)}>Play</button>
       <button className="menu-btn" onClick={() => setCurrentView("leaderboard")}>Leaderboard</button>
       <button className="menu-btn" onClick={() => setCurrentView("settings")}>Settings</button>

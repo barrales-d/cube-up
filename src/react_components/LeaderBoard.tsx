@@ -14,7 +14,7 @@ export function LeaderBoard() {
   return (
     <Overlay>
       <div className="menu-container">
-        <h1>Leaderboard</h1>
+        <h1 className="menu-title">Leaderboard</h1>
         <button className="menu-btn" onClick={() => { setCurrentView("main") }}>Back</button>
 
         <LeaderBoardContent
