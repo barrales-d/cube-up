@@ -66,6 +66,7 @@ body {
 
   background-color: var(--dark-color);
   width: 400px;
+  height: 600px;
   color: var(--light-color);
   display: flex;
   flex-direction: column;
@@ -74,7 +75,7 @@ body {
   padding: 5rem 0;
   border-radius: calc(var(--border-radius)*2);
   background: url("/assets/platform.png");
-  background-size: 400px auto;
+  background-size: 400px 600px;
   background-repeat: no-repeat;
 
   animation: fadeIn 0.3s ease;
@@ -160,33 +161,32 @@ button {
 }
 
 .leaderboard-table {
-  border: 3px solid white;
-  text-align: center;
-  width: 275px;
   border-collapse: collapse;
+  text-align: center;
 }
 
-th,
-tr {
-  border-bottom: 2px solid white;
-  padding: 0.5rem;
-  background-color: #101010;
-}
-
-td {
-  padding: 0.25rem 1rem;
-}
-
-tr:nth-child(odd) {
-  background-color: #4c5baf;
-}
-
-.leaderboard-table>thead {
+thead {
   text-transform: capitalize;
 }
 
+th {
+  padding: 0.2rem 1.5rem;
+}
+
+td {
+  padding: 0.2rem;
+}
+
+tr:nth-child(even) {
+  background-color: var(--light-color);
+  color: var(--dark-color);
+}
+
+
+
 .local-player {
-  background-color: #4caf50 !important;
+  font-weight: bolder;
+  text-decoration: solid underline 3px;
 }
 
 @keyframes fadeIn {
