@@ -8,16 +8,20 @@ export const GAME_CONFIG = {
   player: {
     ground_speed: 160,
     jump_height: 400,
-    scale: 0.05
+    scale: 0.03
   },
   platform: {
     minDistance: 100,
     maxDistance: 200,
     initialCount: 5,
-    scale: { width: 0.25, height: 0.05 }
+    scale: { width: 0.2, height: 0.15 }
   },
   camera: {
     lerpSpeed: 0.5,
     yAxisDeadzone: 200,
+  },
+  palette: {
+    light: 0x6883BA,
+    dark: 0x25232f
   }
 }
