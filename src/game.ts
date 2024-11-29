@@ -4,7 +4,6 @@ import { GAME_CONFIG } from "./components/constants";
 import { PlatformManager } from "./managers/PlatformManager";
 import { ScoreManager } from "./managers/ScoreManager";
 import { gameStore } from "./GameStore";
-import { Barrier } from "./entities/Barrier";
 
 const worldAttributes = GAME_CONFIG.world;
 class MainScene extends Phaser.Scene {
@@ -12,7 +11,6 @@ class MainScene extends Phaser.Scene {
   private platforms!: PlatformManager
   private scoreManager!: ScoreManager;
   private subscriptions: Array<() => void> = [];
-  private barriers: Barrier[] = [];
   constructor() {
     super("MainScene");
   }
@@ -40,23 +38,14 @@ class MainScene extends Phaser.Scene {
     });
     this.subscriptions.push(unsubcribe);
 
-    this.add.rectangle(0, 0, worldAttributes.width, worldAttributes.height, 0x25232f).setOrigin(0).setScrollFactor(0);
+    // Solid Color Background
+    this.add.rectangle(0, 0, worldAttributes.width, worldAttributes.height, GAME_CONFIG.palette.dark).setOrigin(0).setScrollFactor(0);
 
     this.player = new Player(this, worldAttributes.width / 2, 450);
 
     this.platforms = new PlatformManager(this, this.player.getSprite());
 
     this.scoreManager = new ScoreManager(this);
-
-    let barrierRect = new Phaser.Geom.Rectangle(
-      worldAttributes.borderPositionX,
-      worldAttributes.height / 2,
-      10,
-      worldAttributes.width
-    );
-    this.barriers.push(new Barrier(this, this.player.getSprite(), barrierRect));
-    barrierRect.x = worldAttributes.width - worldAttributes.borderPositionX;
-    this.barriers.push(new Barrier(this, this.player.getSprite(), barrierRect));
 
     this.cameras.main.startFollow(this.player.getSprite(), true, GAME_CONFIG.camera.lerpSpeed);
     this.cameras.main.setDeadzone(GAME_CONFIG.camera.yAxisDeadzone);
@@ -70,8 +59,6 @@ class MainScene extends Phaser.Scene {
 
     this.platforms.createNewPlatform(this.player.getY());
     this.platforms.removeOffscreenPlatforms(this.cameras.main.scrollY);
-
-    this.barriers.forEach((barrier) => barrier.updatePosition(this.cameras.main.scrollY));
 
     const [score, didUpdate] = this.scoreManager.updateScore(this.player.getDistancedTraveled());
     // Updates Score in StateManager
@@ -92,8 +79,6 @@ class MainScene extends Phaser.Scene {
     this.player.destroy();
     this.platforms.destroy();
     this.scoreManager.destroy();
-    this.barriers.forEach((barrier) => barrier.destroy());
-    this.barriers = [];
     this.subscriptions.forEach((unsub) => unsub());
     this.subscriptions = [];
   }
