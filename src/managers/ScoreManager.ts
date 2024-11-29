@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { limitScore } from "../components/utils";
+import { GAME_CONFIG } from "../components/constants";
 
 export class ScoreManager {
   private scoreText!: Phaser.GameObjects.Text;
@@ -9,7 +10,7 @@ export class ScoreManager {
     this.scoreText = scene.add.text(16, 16, '0.00m', {
       fontFamily: "Elite",
       fontSize: '32px',
-      color: '#6883BA'
+      color: `#${GAME_CONFIG.palette.light.toString(16)}`
     });
     this.scoreText.setScrollFactor(0);
   }
