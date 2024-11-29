@@ -18,9 +18,8 @@ class MainScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.image("background", "assets/background.png");
     this.load.image("player", "assets/player.png");
-    this.load.image("platform", "assets/platform.png");
+    this.load.image("platform", "assets/platform-long.png");
   }
 
   create(): void {
@@ -41,8 +40,7 @@ class MainScene extends Phaser.Scene {
     });
     this.subscriptions.push(unsubcribe);
 
-    this.add.image(worldAttributes.width / 2, worldAttributes.height / 2, "background")
-      .setScrollFactor(0);
+    this.add.rectangle(0, 0, worldAttributes.width, worldAttributes.height, 0x25232f).setOrigin(0).setScrollFactor(0);
 
     this.player = new Player(this, worldAttributes.width / 2, 450);
 
@@ -60,8 +58,8 @@ class MainScene extends Phaser.Scene {
     barrierRect.x = worldAttributes.width - worldAttributes.borderPositionX;
     this.barriers.push(new Barrier(this, this.player.getSprite(), barrierRect));
 
-    this.cameras.main.startFollow(this.player.getSprite(), true, 0, GAME_CONFIG.camera.lerpSpeed);
-    this.cameras.main.setDeadzone(0, GAME_CONFIG.camera.yAxisDeadzone);
+    this.cameras.main.startFollow(this.player.getSprite(), true, GAME_CONFIG.camera.lerpSpeed);
+    this.cameras.main.setDeadzone(GAME_CONFIG.camera.yAxisDeadzone);
   }
 
   update(): void {
@@ -116,7 +114,7 @@ const CONFIG: Phaser.Types.Core.GameConfig = {
     default: "arcade",
     arcade: {
       gravity: { x: 0, y: 200 },
-      debug: false,
+      debug: true,
     },
   },
 };

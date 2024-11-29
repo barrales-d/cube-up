@@ -74,7 +74,7 @@ body {
   gap: var(--gap-size);
   padding: 5rem 0;
   border-radius: calc(var(--border-radius)*2);
-  background: url("/assets/platform.png");
+  background: url("/assets/menu-bg.png");
   background-size: 400px 600px;
   background-repeat: no-repeat;
 
