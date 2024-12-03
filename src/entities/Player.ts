@@ -9,7 +9,6 @@ export class Player {
   private isGrappling: boolean = false;
   private canGrapple: boolean = true;
   private grappleRope?: Phaser.GameObjects.Line;
-  private swingSpeed: number = 800;
 
   public grapplePoint: Phaser.Math.Vector2 | null = null;
 
@@ -17,7 +16,7 @@ export class Player {
     this.sprite = scene.physics.add.sprite(x, y, 'player').setScale(playerAttributes.scale).refreshBody();
     this.startPosition = new Phaser.Math.Vector2(x, y);
 
-    this.sprite.setBounce(0.2);
+    this.sprite.setBounce(playerAttributes.bounce);
   }
 
   public handleMovement(cursors: Phaser.Types.Input.Keyboard.CursorKeys): void {
@@ -42,6 +41,9 @@ export class Player {
     if (cursors.space.isDown && !this.isGrappling && this.canGrapple)
       this.startGrapple();
 
+    if (cursors.space.isUp && this.isGrappling)
+      this.releaseGrapple();
+
     if (this.isGrappling && this.grapplePoint)
       this.updateGrapple();
   }
@@ -57,6 +59,7 @@ export class Player {
   public setCollider(scene: Phaser.Scene, object: any): void {
     scene.physics.add.collider(this.sprite, object, () => {
       this.canGrapple = true;
+      this.releaseGrapple();
     });
   }
 
@@ -86,7 +89,7 @@ export class Player {
       0x000000
     ).setOrigin(0, 0);
 
-    this.grappleRope.setLineWidth(2);
+    this.grappleRope.setLineWidth(playerAttributes.grappleWidth);
   }
 
   private updateGrapple(): void {
@@ -95,7 +98,7 @@ export class Player {
 
     const distance = Phaser.Math.Distance.BetweenPoints(this.sprite, this.grapplePoint);
     console.log(distance);
-    if (distance < 50) {
+    if (distance < playerAttributes.maxDistanceToRelease) {
       this.releaseGrapple();
       return;
     }
@@ -110,10 +113,10 @@ export class Player {
     const perpAngle = angle + Math.PI / 2;
 
     const swingForce = new Phaser.Math.Vector2;
-    swingForce.setToPolar(perpAngle, 300);
+    swingForce.setToPolar(perpAngle, playerAttributes.swingSpeed);
 
     const pullForce = new Phaser.Math.Vector2();
-    pullForce.setToPolar(angle, this.swingSpeed);
+    pullForce.setToPolar(angle, playerAttributes.pullSpeed);
 
     const force = new Phaser.Math.Vector2(
       (pullForce.x + swingForce.x) * 0.5,
