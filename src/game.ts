@@ -43,7 +43,9 @@ class MainScene extends Phaser.Scene {
 
     this.player = new Player(this, worldAttributes.width / 2, 450);
 
-    this.platforms = new PlatformManager(this, this.player.getSprite());
+    this.platforms = new PlatformManager(this);
+
+    this.player.setCollider(this, this.platforms.getPlatforms());
 
     this.scoreManager = new ScoreManager(this);
 
@@ -59,6 +61,10 @@ class MainScene extends Phaser.Scene {
 
     this.platforms.createNewPlatform(this.player.getY());
     this.platforms.removeOffscreenPlatforms(this.cameras.main.scrollY);
+
+    // Only set the grapplePoint when the Player is not Swinging
+    if (!this.player.isSwinging())
+      this.player.grapplePoint = this.platforms.getNearestGrapplePoint(this.player.getSprite());
 
     const [score, didUpdate] = this.scoreManager.updateScore(this.player.getDistancedTraveled());
     // Updates Score in StateManager
