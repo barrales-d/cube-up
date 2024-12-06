@@ -8,7 +8,12 @@ export const GAME_CONFIG = {
   player: {
     ground_speed: 160,
     jump_height: 400,
-    scale: 0.03
+    scale: 0.03,
+    swingSpeed: 300,
+    pullSpeed: 800,
+    bounce: 0.2,
+    grappleWidth: 2,
+    maxDistanceToRelease: 50,
   },
   platform: {
     minDistance: 100,

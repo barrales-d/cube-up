@@ -6,13 +6,13 @@ const platformAttributes = GAME_CONFIG.platform;
 export class PlatformManager {
   private platforms!: Phaser.Physics.Arcade.StaticGroup;
   private lastPlatformY: number = 0;
+  private grapplePoints!: Phaser.Physics.Arcade.StaticGroup;
 
-  constructor(scene: Phaser.Scene, player: Phaser.GameObjects.GameObject) {
+  constructor(scene: Phaser.Scene) {
     this.platforms = scene.physics.add.staticGroup();
+    this.grapplePoints = scene.physics.add.staticGroup();
     this.lastPlatformY = 0;
     this.createInitialPlatforms();
-
-    scene.physics.add.collider(player, this.platforms);
   }
 
   private createInitialPlatforms(): void {
@@ -33,8 +33,19 @@ export class PlatformManager {
     this.platforms.create(x, y, 'platform')
       .setScale(platformAttributes.scale.width, platformAttributes.scale.height)
       .refreshBody();
-
     this.lastPlatformY = y;
+
+    const platform = this.platforms.getLast(true).body!;
+
+    const points = [
+      new Phaser.Math.Vector2(platform.left, platform.bottom),
+      new Phaser.Math.Vector2(platform.right, platform.bottom),
+    ];
+
+    points.forEach(point => {
+      this.grapplePoints.create(point.x, point.y, 'grapple-point');
+    });
+
   }
 
   public createNewPlatform(playerY: number): void {
@@ -43,9 +54,14 @@ export class PlatformManager {
   }
 
   public removeOffscreenPlatforms(cameraY: number): void {
-    this.platforms.getChildren().forEach((platform) => {
+    this.platforms.getChildren().forEach(platform => {
       if (platform.body!.position.y > cameraY + GAME_CONFIG.world.height)
         platform.destroy();
+    });
+
+    this.grapplePoints.getChildren().forEach(point => {
+      if (point.body!.position.y > cameraY + GAME_CONFIG.world.height)
+        point.destroy();
     });
   }
 
@@ -66,5 +82,31 @@ export class PlatformManager {
   public destroy(): void {
     this.platforms.clear(true, true);
     this.platforms.destroy();
+    this.grapplePoints.clear(true, true);
+    this.grapplePoints.destroy();
+  }
+
+  public getNearestGrapplePoint(player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody): Phaser.Math.Vector2 | null {
+    let nearestPoint: Phaser.Math.Vector2 | null = null;
+    let minDistance = Number.MAX_VALUE;
+    this.grapplePoints.getChildren().forEach(point => {
+      const pointPos = point.body! as Phaser.Physics.Arcade.Body;
+      // Do not consider points underneath Player
+      if (pointPos.center.y > player.y)
+        return;
+      const distance = Phaser.Math.Distance.BetweenPoints(player, pointPos.center);
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestPoint = pointPos.center;
+      }
+
+    });
+
+    return nearestPoint;
+  }
+
+  public getPlatforms(): Phaser.Physics.Arcade.StaticGroup {
+    return this.platforms;
   }
 }
