@@ -86,7 +86,7 @@ export class Player {
       0, 0,
       this.sprite.x, this.sprite.y,
       this.grapplePoint.x, this.grapplePoint.y,
-      0x000000
+      GAME_CONFIG.palette.light
     ).setOrigin(0, 0);
 
     this.grappleRope.setLineWidth(playerAttributes.grappleWidth);
