@@ -19,6 +19,7 @@ class MainScene extends Phaser.Scene {
     this.load.image("player", "assets/player.png");
     this.load.image("platform", "assets/platform-long.png");
     this.load.image("grapple-point", "assets/platform-square.png");
+    this.load.image("grapple-icon", "assets/grapple-icon.png");
   }
 
   create(): void {
