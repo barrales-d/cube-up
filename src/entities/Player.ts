@@ -9,6 +9,7 @@ export class Player {
   private isGrappling: boolean = false;
   private canGrapple: boolean = true;
   private grappleRope?: Phaser.GameObjects.Line;
+  private grappleIcon!: Phaser.GameObjects.Image;
 
   public grapplePoint: Phaser.Math.Vector2 | null = null;
 
@@ -17,12 +18,23 @@ export class Player {
     this.startPosition = new Phaser.Math.Vector2(x, y);
 
     this.sprite.setBounce(playerAttributes.bounce);
+
+    const padding = 64;
+    this.grappleIcon = scene.add.image(GAME_CONFIG.world.width - padding, GAME_CONFIG.world.height - padding, 'grapple-icon');
+    this.grappleIcon.setScale(0.05).setOrigin(0).setScrollFactor(0);
   }
 
   public handleMovement(cursors: Phaser.Types.Input.Keyboard.CursorKeys): void {
     if (this.sprite.body.touching.down) {
       this.canGrapple = true;
     }
+
+    if (this.canGrapple) {
+      this.grappleIcon.setTint(0xffffff);
+    } else {
+      this.grappleIcon.setTint(0x888888);
+    }
+
     // Horizontal Movement
     if (cursors.left.isDown) {
       this.sprite.setVelocityX(-playerAttributes.ground_speed);
@@ -86,7 +98,7 @@ export class Player {
       0, 0,
       this.sprite.x, this.sprite.y,
       this.grapplePoint.x, this.grapplePoint.y,
-      0x000000
+      GAME_CONFIG.palette.light
     ).setOrigin(0, 0);
 
     this.grappleRope.setLineWidth(playerAttributes.grappleWidth);

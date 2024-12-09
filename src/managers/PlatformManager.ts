@@ -7,11 +7,15 @@ export class PlatformManager {
   private platforms!: Phaser.Physics.Arcade.StaticGroup;
   private lastPlatformY: number = 0;
   private grapplePoints!: Phaser.Physics.Arcade.StaticGroup;
+  private highlighter!: Phaser.GameObjects.Graphics;
 
   constructor(scene: Phaser.Scene) {
     this.platforms = scene.physics.add.staticGroup();
     this.grapplePoints = scene.physics.add.staticGroup();
     this.lastPlatformY = 0;
+
+    this.highlighter = scene.add.graphics();
+
     this.createInitialPlatforms();
   }
 
@@ -43,7 +47,7 @@ export class PlatformManager {
     ];
 
     points.forEach(point => {
-      this.grapplePoints.create(point.x, point.y, 'grapple-point');
+      this.grapplePoints.create(point.x, point.y, 'grapple-point').setScale(0.035).refreshBody();
     });
 
   }
@@ -84,6 +88,8 @@ export class PlatformManager {
     this.platforms.destroy();
     this.grapplePoints.clear(true, true);
     this.grapplePoints.destroy();
+    this.highlighter.clear();
+    this.highlighter.destroy();
   }
 
   public getNearestGrapplePoint(player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody): Phaser.Math.Vector2 | null {
@@ -91,6 +97,7 @@ export class PlatformManager {
     let minDistance = Number.MAX_VALUE;
     this.grapplePoints.getChildren().forEach(point => {
       const pointPos = point.body! as Phaser.Physics.Arcade.Body;
+
       // Do not consider points underneath Player
       if (pointPos.center.y > player.y)
         return;
@@ -99,6 +106,10 @@ export class PlatformManager {
       if (distance < minDistance) {
         minDistance = distance;
         nearestPoint = pointPos.center;
+        
+        this.highlighter.clear();
+        this.highlighter.lineStyle(2, GAME_CONFIG.palette.light);
+        this.highlighter.strokeCircle(pointPos.center.x, pointPos.center.y, 15);
       }
 
     });

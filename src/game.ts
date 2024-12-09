@@ -18,6 +18,8 @@ class MainScene extends Phaser.Scene {
   preload(): void {
     this.load.image("player", "assets/player.png");
     this.load.image("platform", "assets/platform-long.png");
+    this.load.image("grapple-point", "assets/platform-square.png");
+    this.load.image("grapple-icon", "assets/grapple-icon.png");
   }
 
   create(): void {
@@ -105,7 +107,7 @@ const CONFIG: Phaser.Types.Core.GameConfig = {
     default: "arcade",
     arcade: {
       gravity: { x: 0, y: 200 },
-      debug: true,
+      debug: false,
     },
   },
 };
