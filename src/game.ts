@@ -5,12 +5,60 @@ import { PlatformManager } from "./managers/PlatformManager";
 import { ScoreManager } from "./managers/ScoreManager";
 import { gameStore } from "./GameStore";
 
+class MusicScene extends Phaser.Scene {
+  private backgroundMusic!: Phaser.Sound.BaseSound;
+  private windSFX!: Phaser.Sound.BaseSound;
+  private loseSFX!: Phaser.Sound.BaseSound;
+
+  constructor() {
+    super({
+      key: "MusicScene",
+      active: true
+    });
+  }
+
+  preload() {
+    this.load.audio("background-music", "assets/b423b42.wav");
+    this.load.audio("wind-sfx", "assets/wind5.wav");
+    this.load.audio("lose-sfx", "assets/win_and_lose_melodies_-_basic_lose.wav");
+  }
+
+  create() {
+    this.backgroundMusic = this.sound.add("background-music", { volume: 0.1, loop: true, rate: 1.5 });
+    this.backgroundMusic.play();
+
+    this.windSFX = this.sound.add("wind-sfx", { volume: 0.05, loop: true });
+    this.windSFX.play();
+
+    this.loseSFX = this.sound.add("lose-sfx", { volume: 0.1 });
+
+    this.scene.switch("MainScene");
+
+  }
+
+  public playLoseSFX() {
+    this.loseSFX.play();
+  }
+
+  public playWindSFX() {
+    this.windSFX.resume();
+  }
+
+  public pauseWindSFX() {
+    this.windSFX.pause();
+  }
+}
+
+
 const worldAttributes = GAME_CONFIG.world;
 class MainScene extends Phaser.Scene {
   private player!: Player;
   private platforms!: PlatformManager
   private scoreManager!: ScoreManager;
   private subscriptions: Array<() => void> = [];
+
+  private musicScene!: MusicScene;
+
   constructor() {
     super("MainScene");
   }
@@ -33,9 +81,11 @@ class MainScene extends Phaser.Scene {
 
         } else {
           this.scene.resume();
+          this.musicScene.playWindSFX();
         }
       } else {
         this.scene.pause();
+        this.musicScene.pauseWindSFX();
       }
     });
     this.subscriptions.push(unsubcribe);
@@ -53,6 +103,8 @@ class MainScene extends Phaser.Scene {
 
     this.cameras.main.startFollow(this.player.getSprite(), true, GAME_CONFIG.camera.lerpSpeed);
     this.cameras.main.setDeadzone(GAME_CONFIG.camera.yAxisDeadzone);
+
+    this.musicScene = this.scene.get("MusicScene") as MusicScene;
   }
 
   update(): void {
@@ -74,6 +126,7 @@ class MainScene extends Phaser.Scene {
       gameStore.setState("score", score);
 
     if (this.player.getY() > this.platforms.getLowestPlatformY() + worldAttributes.height / 2) {
+      this.musicScene.playLoseSFX();
       this.gameOver();
     }
   }
@@ -97,7 +150,7 @@ const CONFIG: Phaser.Types.Core.GameConfig = {
   width: 800,
   height: 600,
   parent: "game",
-  scene: [MainScene],
+  scene: [MusicScene, MainScene],
   backgroundColor: "#DDDDDD",
   scale: {
     mode: Phaser.Scale.FIT,
