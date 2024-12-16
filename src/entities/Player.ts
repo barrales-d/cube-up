@@ -25,10 +25,6 @@ export class Player {
   }
 
   public handleMovement(cursors: Phaser.Types.Input.Keyboard.CursorKeys): void {
-    if (this.sprite.body.touching.down) {
-      this.canGrapple = true;
-    }
-
     if (this.canGrapple) {
       this.grappleIcon.setTint(0xffffff);
     } else {
