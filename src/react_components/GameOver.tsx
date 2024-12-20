@@ -1,6 +1,7 @@
 import { ShareScoreProps } from "../types/gameover";
 import { useShareStateData } from "../hooks/useShareStateData";
 import { useGameState } from "../GameStore";
+import { Button } from "./Button";
 
 export function GameOver() {
   const [hasGameOver] = useGameState("hasGameOver");
@@ -23,15 +24,15 @@ export function GameOver() {
 
       <ShareScore {...shareStateProps} />
 
-      <button className="menu-btn" onClick={handleRestart}>Play Again</button>
-      <button className="menu-btn" onClick={() => setCurrentView("main")}>Main Menu</button>
+      <Button type="menu-btn" onClick={handleRestart}>Play Again</Button>
+      <Button type="menu-btn" onClick={() => setCurrentView("main")}>Main Menu</Button>
     </div>
   );
 }
 
 function ShareScore({ shareState, handleShare, player, setPlayer }: ShareScoreProps) {
   switch (shareState) {
-    case "button": return <button className="menu-btn" onClick={handleShare}>Share?</button>;
+    case "button": return <Button type="menu-btn" onClick={handleShare}>Share?</Button>;
     case "confirm": return <h3>Thank you for sharing!</h3>
     case "share": return (
       <div className="share-container">
@@ -43,7 +44,7 @@ function ShareScore({ shareState, handleShare, player, setPlayer }: ShareScorePr
           className="share-input"
           autoFocus
         />
-        <button className="menu-btn share-btn" onClick={handleShare}>Submit Score</button>
+        <Button type="share-btn" onClick={handleShare}>Submit Score</Button>
       </div>
     )
   }
