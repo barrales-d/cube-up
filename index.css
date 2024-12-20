@@ -137,12 +137,23 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 
 .share-btn {
-  width: 120px;
-  padding: 0.5rem;
-  margin: 5px;
+  width: 100px;
+  aspect-ratio: 4 / 1;
+  border-radius: var(--border-radius);
+
+  transition: background-color 0.5s ease;
+}
+
+.share-btn:active,
+.share-btn:hover {
+  outline: currentColor solid 2px;
+  background-color: var(--dark-color);
+  color: currentColor;
+  cursor: pointer;
 }
 
 .share-input {

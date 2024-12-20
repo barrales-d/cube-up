@@ -4,6 +4,7 @@ import { GameOver } from "./GameOver";
 import { LeaderBoard } from "./LeaderBoard";
 import { MenuView, useGameState } from "../GameStore";
 import '../../index.css';
+import { Button } from "./Button";
 
 export function ReactUI() {
   const [isPlaying, setIsPlaying] = useGameState("isPlaying");
@@ -12,12 +13,12 @@ export function ReactUI() {
   if (isPlaying as boolean) {
     // Game is running, Render PauseButton
     return (
-      <button className="pause-btn" onClick={() => { setIsPlaying(false); }}>
+      <Button type="pause-btn" onClick={() => setIsPlaying(false)}>
         <svg width="24" height="24" viewBox="0 0 24 24">
           <rect x="6" y="4" width="4" height="16" fill="currentColor" />
           <rect x="14" y="4" width="4" height="16" fill="currentColor" />
         </svg>
-      </button>
+      </Button>
     );
   }
 

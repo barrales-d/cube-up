@@ -24,13 +24,13 @@ class MusicScene extends Phaser.Scene {
   }
 
   create() {
-    this.backgroundMusic = this.sound.add("background-music", { volume: 0.1, loop: true, rate: 1.5 });
+    this.backgroundMusic = this.sound.add("background-music", { volume: 0.05, loop: true, rate: 1.5 });
     this.backgroundMusic.play();
 
-    this.windSFX = this.sound.add("wind-sfx", { volume: 0.05, loop: true });
+    this.windSFX = this.sound.add("wind-sfx", { volume: 0.02, loop: true });
     this.windSFX.play();
 
-    this.loseSFX = this.sound.add("lose-sfx", { volume: 0.1 });
+    this.loseSFX = this.sound.add("lose-sfx", { volume: 0.02 });
 
     this.scene.switch("MainScene");
 
