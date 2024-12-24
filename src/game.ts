@@ -74,8 +74,8 @@ class MainScene extends Phaser.Scene {
     const unsubcribe = gameStore.sub("isPlaying", (isPlaying: boolean) => {
       if (isPlaying) {
         if (gameStore.getState("hasGameOver")) {
-          console.log("[DEBUG]", "isPlaying, hasGameOver are TRUE");
           gameStore.setState("hasGameOver", false);
+          gameStore.setState("currentView", "main");
           this.destroy();
           this.scene.restart();
 
