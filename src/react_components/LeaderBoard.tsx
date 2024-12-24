@@ -3,6 +3,7 @@ import { useLeaderBoardData } from "../hooks/useLeaderBoardData";
 import { useLocalPlayer } from "../hooks/useLocalPlayer";
 import { LeaderBoardContentProps, PlayerRowProps } from "../types/leaderboard";
 import { useGameState } from "../GameStore";
+import { Button } from "./Button";
 
 
 export function LeaderBoard() {
@@ -15,7 +16,7 @@ export function LeaderBoard() {
     <Overlay>
       <div className="menu-container">
         <h1 className="menu-title">Leaderboard</h1>
-        <button className="menu-btn" onClick={() => { setCurrentView("main") }}>Back</button>
+        <Button type="menu-btn" onClick={() => setCurrentView("main")}>Back</Button>
 
         <LeaderBoardContent
           isLoading={isLoading}
