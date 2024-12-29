@@ -9,7 +9,6 @@ export function MainMenu() {
       <h1 className="menu-title" >Cube Up</h1>
       <Button type="menu-btn" onClick={() => setIsPlaying(true)}>Play</Button>
       <Button type="menu-btn" onClick={() => setCurrentView("leaderboard")}>Leaderboard</Button>
-      <Button type="menu-btn" onClick={() => setCurrentView("settings")}>Settings</Button>
     </div>
   );
 }
