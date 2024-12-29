@@ -59,12 +59,12 @@ export class PlatformManager {
 
   public removeOffscreenPlatforms(cameraY: number): void {
     this.platforms.getChildren().forEach(platform => {
-      if (platform.body!.position.y > cameraY + GAME_CONFIG.world.height)
+      if (platform.body!.position.y > cameraY + GAME_CONFIG.world.height * 1.5)
         platform.destroy();
     });
 
     this.grapplePoints.getChildren().forEach(point => {
-      if (point.body!.position.y > cameraY + GAME_CONFIG.world.height)
+      if (point.body!.position.y > cameraY + GAME_CONFIG.world.height * 1.5)
         point.destroy();
     });
   }
