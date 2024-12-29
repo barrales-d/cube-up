@@ -60,6 +60,7 @@ export class Player {
     return this.sprite;
   }
 
+  public getX(): number { return this.sprite.x; }
   public getY(): number { return this.sprite.y; }
 
   public getStartPosition(): Phaser.Math.Vector2 { return this.startPosition; }
