@@ -9,29 +9,29 @@ export class PlatformManager {
   private grapplePoints!: Phaser.Physics.Arcade.StaticGroup;
   private highlighter!: Phaser.GameObjects.Graphics;
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, playerX: number) {
     this.platforms = scene.physics.add.staticGroup();
     this.grapplePoints = scene.physics.add.staticGroup();
     this.lastPlatformY = 0;
 
     this.highlighter = scene.add.graphics();
 
-    this.createInitialPlatforms();
+    this.createInitialPlatforms(playerX);
   }
 
-  private createInitialPlatforms(): void {
+  private createInitialPlatforms(playerX: number): void {
     const startPlatform = this.platforms.create(400, 600, 'platform')
       .setScale(platformAttributes.scale.width, platformAttributes.scale.height)
       .refreshBody();
     this.lastPlatformY = startPlatform.y;
 
     for (let i = 0; i < platformAttributes.initialCount; i++) {
-      this.createPlatform();
+      this.createPlatform(playerX);
     }
   }
 
-  private createPlatform(): void {
-    const x = Phaser.Math.Between(200, GAME_CONFIG.world.width - 200);
+  private createPlatform(playerX: number): void {
+    const x = Phaser.Math.Between(playerX - 200, playerX + GAME_CONFIG.world.width - 200);
     const y = this.lastPlatformY - Phaser.Math.Between(platformAttributes.minDistance, platformAttributes.maxDistance);
 
     this.platforms.create(x, y, 'platform')
@@ -52,9 +52,9 @@ export class PlatformManager {
 
   }
 
-  public createNewPlatform(playerY: number): void {
+  public createNewPlatform(playerX: number, playerY: number): void {
     if (playerY < this.lastPlatformY + (GAME_CONFIG.world.height / 2))
-      this.createPlatform();
+      this.createPlatform(playerX);
   }
 
   public removeOffscreenPlatforms(cameraY: number): void {
